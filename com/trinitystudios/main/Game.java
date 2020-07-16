@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import com.trinitystudios.entities.Entity;
 import com.trinitystudios.entities.Player;
 import com.trinitystudios.graficos.Spritesheet;
+import com.trinitystudios.world.World;
 
 
 public class Game extends Canvas implements Runnable, KeyListener {
@@ -34,6 +35,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 	private Player player;
 	
+	public static World world;
+	
+	
 
 	public static Spritesheet spritesheet;
 	
@@ -48,11 +52,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		
 		
 		//inicializando objetos
+		
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
 		spritesheet = new Spritesheet("/spritesheet.png");
-		
-		
+		world = new World("/map.png");
 		player = new Player(0,0,16,16,spritesheet.getSprite(32, 0,16,16));
 		entities.add(player);
 		
@@ -111,12 +115,13 @@ public synchronized void start() {
 		}
 		
 		Graphics graphics = image.getGraphics();
-		graphics.setColor(new Color(0,165,0));
+		graphics.setColor(new Color(0,0,0));
 		graphics.fillRect(0, 0, width, height); // renderizar retangulo por exemplo 
 		
 		/*Renderização do jogo */
 		
 		//Graphics2D g2 = (Graphics2D) graphics;
+		world.render(graphics);
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
 			e.render(graphics);
@@ -151,7 +156,7 @@ public synchronized void start() {
 			}
 			
 			if(System.currentTimeMillis() - timer >= 1000) {
-				System.out.println("FPS: " + frames);
+				//System.out.println("FPS: " + frames);
 				frames =0;
 				timer += 1000;
 			}
