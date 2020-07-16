@@ -35,7 +35,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private Player player;
 	
 
-	public Spritesheet spritesheet;
+	public static Spritesheet spritesheet;
 	
 	public List<Entity> entities;
 	
@@ -111,7 +111,7 @@ public synchronized void start() {
 		}
 		
 		Graphics graphics = image.getGraphics();
-		graphics.setColor(new Color(0,0,0));
+		graphics.setColor(new Color(0,165,0));
 		graphics.fillRect(0, 0, width, height); // renderizar retangulo por exemplo 
 		
 		/*Renderização do jogo */
@@ -131,6 +131,7 @@ public synchronized void start() {
 
 	@Override
 	public void run() { // gamelooping feito profissionalmente
+		requestFocus();
 		long lastTime = System.nanoTime();
 		double amountOfUpdates = 60.0;
 		double ns = 1000000000 / amountOfUpdates;
